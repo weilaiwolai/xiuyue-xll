@@ -1,4 +1,4 @@
-name: Build xiuyue2.xll (32-bit)
+name: Build xiuyue.xll (64-bit)
 on: [push, workflow_dispatch]
 
 jobs:
@@ -8,22 +8,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup MSYS2 + MinGW (32-bit)
+      - name: Setup MSYS2 + MinGW (64-bit)
         uses: msys2/setup-msys2@v2
         with:
-          msystem: mingw32
-          install: mingw-w64-i686-gcc
+          msystem: mingw64
+          install: mingw-w64-x86_64-gcc
 
       - name: Compile
         shell: msys2 {0}
         run: |
-          i686-w64-mingw32-gcc \
+          x86_64-w64-mingw32-gcc \
             -shared -static -s -O3 \
-            -o xiuyue2.xll \
+            -o xiuyue.xll \
             xiuyue.c xiuyue.def
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: xiuyue2-xll-32bit
-          path: xiuyue2.xll
+          name: xiuyue-xll-64bit
+          path: xiuyue.xll
