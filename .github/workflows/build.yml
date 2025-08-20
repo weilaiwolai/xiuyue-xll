@@ -1,4 +1,4 @@
-name: Build xiuyue.xll (32-bit)
+name: Build xiuyue2.xll (32-bit)
 on: [push, workflow_dispatch]
 
 jobs:
@@ -19,11 +19,11 @@ jobs:
         run: |
           i686-w64-mingw32-gcc \
             -shared -static -s -O3 \
-            -o xiuyue.xll \
+            -o xiuyue2.xll \
             xiuyue.c xiuyue.def
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: xiuyue-xll-32bit
-          path: xiuyue.xll
+          name: xiuyue2-xll-32bit
+          path: xiuyue2.xll
