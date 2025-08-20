@@ -1,20 +1,28 @@
 name: Build xiuyue.xll
 on: [push, workflow_dispatch]
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup MinGW
-      - uses: msys2/setup-msys2@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2 + MinGW
+        uses: msys2/setup-msys2@v2
         with:
           msystem: mingw64
           install: mingw-w64-x86_64-gcc
-      - name: Build
+
+      - name: Compile
         shell: msys2 {0}
         run: |
-          x86_64-w64-mingw32-gcc -shared -static -O3 -s -o xiuyue.xll xiuyue.c xiuyue.def
-      - name: Upload
+          x86_64-w64-mingw32-gcc \
+            -shared -static -s -O3 \
+            -o xiuyue.xll \
+            xiuyue.c xiuyue.def
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: xiuyue-xll
